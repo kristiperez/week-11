@@ -1,5 +1,8 @@
 import React,{Component} from 'react';
 import BookList from './BookList';
+import Header from './Header';
+import Footer from './Footer';
+import './App.css';
 
 class App extends Component {
   constructor(props) {
@@ -26,7 +29,10 @@ class App extends Component {
   render() {
     return (
       <div>
+        <Header />
         <BookList books = {this.state.books} />
+        
+        <Footer />
       </div>
     )
   }

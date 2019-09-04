@@ -11,7 +11,7 @@ class App extends Component {
 
   incrementCounter = () => {
     console.log('increment counter called')
-
+    // below creating a NEW state not updating existing state
     this.setState({
       counter: this.state.counter + 1
     })
