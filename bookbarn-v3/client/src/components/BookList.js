@@ -48,6 +48,10 @@ class BookList extends Component {
         })
     }
 
+    handleUpdateBook = (bookId) => {
+        this.props.history.push(`/update-book/${bookId}`)
+    }
+
 
     render() {
         let bookItems = this.state.books.map((book, index) => {
@@ -59,6 +63,7 @@ class BookList extends Component {
                         <div>{book.year}</div>
                         <div>{book.publisher}</div>
                         <Button variant="outline-danger" onClick={() => this.deleteBook(book.id)}>Delete</Button>
+                        <Button variant="outline-primary" onClick={() => this.handleUpdateBook(book.id)}>Edit</Button>
                         
                 </div>
             )

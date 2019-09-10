@@ -6,45 +6,37 @@ class UpdateBook extends Component {
         super(props)
 
         this.state = {
-            title: title,
-            genre: genre,
-            publisher: publisher,
-            year: year,
-            imageurl: imageurl
+            title: '',
+            genre: '',
+            publisher: '',
+            year: '',
+            imageurl: '',
+            bookId: this.props.match.params.bookId
         }
+
+
+        this.fetchBook()
 
     }
 
-    fetchBooks = () => {
-        fetch('http://localhost:3001/books')
+    fetchBook = () => {
+        fetch(`http://localhost:3001/update-book/${this.state.bookId}`)
         .then(response => response.json())
-        .then(books => {
+        .then(book => {
         
             this.setState({
-                books: books
-            }, () => {
-                console.log('books updated')
+                title: book.title,
+                genre: book.genre,
+                publisher: book.publisher,
+                year: book.year,
+                imageurl: book.imageurl
             })
         })
     }
      
-    deleteBook = (id) => {
+    updateBook = () => {
         //value is in the state
-        fetch('http://localhost:3001/delete-book', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                id:id
-            })
-        }).then(() => {
-            this.props.history.push("/")
-        })
-
-    handleSave = () => {
-        //value is in the state
-        fetch('http://localhost:3001/add-book', {
+        fetch('http://localhost:3001/update-book', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -54,14 +46,15 @@ class UpdateBook extends Component {
                 genre: this.state.genre,
                 publisher: this.state.publisher,
                 year: this.state.year,
-                imageurl: this.state.imageurl
-    
+                imageurl: this.state.imageurl,
+                bookId: this.props.match.params.bookId
             })
-        })
-        .then(() => {
+        }).then(() => {
             this.props.history.push("/books")
         })
+
     }
+
 
     handleTextBoxChange = (e) => {
         this.setState({
@@ -70,16 +63,16 @@ class UpdateBook extends Component {
     }
 
     handleSubmit = () => {
-       this.handleSave()
-    }
+        this.updateBook()
+     }
 
     render() {
         return <div>
-            <input type="text" name="title" value="{title}" onChange={this.handleTextBoxChange} />
-            <input type="text" name="genre" value="{genre}" onChange={this.handleTextBoxChange} />
-            <input type="text" name="publisher" value="{publisher}" onChange={this.handleTextBoxChange} />
-            <input type="text" name="year" value="{year}" onChange={this.handleTextBoxChange} />
-            <input type="text" name="imageurl" value="{imageurl}" onChange={this.handleTextBoxChange} />
+            <input type="text" name="title" value={this.state.title} onChange={this.handleTextBoxChange} />
+            <input type="text" name="genre" value={this.state.genre} onChange={this.handleTextBoxChange} />
+            <input type="text" name="publisher" value={this.state.publisher} onChange={this.handleTextBoxChange} />
+            <input type="text" name="year" value={this.state.year} onChange={this.handleTextBoxChange} />
+            <input type="text" name="imageurl" value={this.state.imageurl} onChange={this.handleTextBoxChange} />
             <button onClick={this.handleSubmit}>Submit</button>
 
         </div>

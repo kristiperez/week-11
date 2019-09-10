@@ -64,12 +64,13 @@ app.post('/delete-book',async (req,res) => {
 //   });
 
 
-app.get('/update-book', (req,res) => {
-    let id = parseInt(req.body.id)
+app.get('/update-book/:bookId', (req,res) => {
+    let bookId = parseInt(req.params.bookId)
+
 
     models.Book.findOne({
         where: {
-            id: id
+            id: bookId
         }
     }).then(book => {
         res.json(book)
@@ -82,6 +83,7 @@ app.post('/update-book', (req,res) => {
     let publisher = req.body.publisher
     let year = req.body.year
     let imageurl = req.body.imageurl
+    let bookId = req.body.bookId
 
     models.Book.update({
         title: title,
@@ -92,7 +94,7 @@ app.post('/update-book', (req,res) => {
     },
         {
             where: {
-            id: id
+            id: bookId
         }
     })
     res.json({success: true})
